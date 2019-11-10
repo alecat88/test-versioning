@@ -6,6 +6,7 @@ const getAsync = Promise.promisify(cmd.get, { multiArgs: true, context: cmd });
 getAsync("npm run format").then(() => {
   getAsync("git diff-files").then(data => {
     if (data.length) {
+      console.log(data);
       console.log("There were eslint changes, check and commit again.");
     } else {
       cmd.run('git commit -m "ciao"');
