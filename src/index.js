@@ -9,11 +9,17 @@ getAsync("npm run format").then(() => {
       console.log(data, data[0].length);
       console.log("There were eslint changes, check and commit again.");
     } else {
-      cmd.run('git commit -m "ciao"');
-      cmd.run("npm version patch");
-      console.log("Verion updated");
-      cmd.run("git add package.json");
-      cmd.run('git commit -m "release"');
+      getAsync('git commit -m "ciao"').then(() => {
+        getAsync("npm version patch").then(() => {
+          getAsync("git add package.json").then(
+            getAsync('git commit -m "release"')
+          );
+        });
+      });
+      // cmd.run;
+      // console.log("Verion updated");
+      // cmd.run("git add package.json");
+      // cmd.run('git commit -m "release"');
     }
   });
 });
