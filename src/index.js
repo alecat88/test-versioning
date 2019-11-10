@@ -1,30 +1,38 @@
 var cmd = require("node-cmd");
 var Promise = require("bluebird");
+const minimist = require("minimist");
 // import { Promise } from 'bluebird';
 const getAsync = Promise.promisify(cmd.get, { multiArgs: true, context: cmd });
 
 getAsync("npm run format").then(() => {
-    getAsync("git diff-files").then(data => {
-        if (data && data[0].length > 0) {
-            console.log(data, data[0].length);
-            console.log("There were eslint changes, check and commit again.");
-        } else {
-            getAsync('git commit -m "ciao"').then(() => {
-                getAsync("npm version patch").then(() => {
-                    getAsync("git add package.json").then(
-                        // getAsync('git commit -m "release"').then(() => {
-                        //   console.log("version updated");
-                        // })
-                        console.log('version updated');
-                    );
-                });
+  getAsync("git diff-files").then(data => {
+    if (data && data[0].length > 0) {
+      console.log(data, data[0].length);
+      console.log("There were eslint changes, check and commit again.");
+    } else {
+      //Get Optional Parameters
+      const parsedParameters = minimist(process.argv.slice(2));
+      console.log(parsedParameters, parsedParameters.m);
+      let commitMessage =
+        typeof parsedParameters.m === "string" ? parsedParameters.m : undefined; // -n <componentName> / OPTIONAL
+      console.log("commitMessage", commitMessage);
+      if (commitMessage !== undefined) {
+        getAsync(`git commit -m "${commitMessage}"`).then(() => {
+          getAsync("npm version patch").then(() => {
+            getAsync("git add package.json").then(() => {
+              console.log("version updated");
             });
-            // cmd.run;
-            // console.log("Verion updated");
-            // cmd.run("git add package.json");
-            // cmd.run('git commit -m "release"');
-        }
-    });
+          });
+        });
+      } else {
+        console.warn("Missing commit message");
+      }
+      // cmd.run;
+      // console.log("Verion updated");
+      // cmd.run("git add package.json");
+      // cmd.run('git commit -m "release"');
+    }
+  });
 });
 
 // let value;
@@ -82,3 +90,4 @@ getAsync("npm run format").then(() => {
 
 // npm version patch
 // commit -m "Release vx.x.x"
+//
