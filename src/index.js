@@ -12,7 +12,9 @@ getAsync("npm run format").then(() => {
       getAsync('git commit -m "ciao"').then(() => {
         getAsync("npm version patch").then(() => {
           getAsync("git add package.json").then(
-            getAsync('git commit -m "release"')
+            getAsync('git commit -m "release"').then(() => {
+              console.log("version updated");
+            })
           );
         });
       });
