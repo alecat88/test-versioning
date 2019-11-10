@@ -4,26 +4,27 @@ var Promise = require("bluebird");
 const getAsync = Promise.promisify(cmd.get, { multiArgs: true, context: cmd });
 
 getAsync("npm run format").then(() => {
-  getAsync("git diff-files").then(data => {
-    if (data && data[0].length > 0) {
-      console.log(data, data[0].length);
-      console.log("There were eslint changes, check and commit again.");
-    } else {
-      getAsync('git commit -m "ciao"').then(() => {
-        getAsync("npm version patch").then(() => {
-          getAsync("git add package.json").then(
-            getAsync('git commit -m "release"').then(() => {
-              console.log("version updated");
-            })
-          );
-        });
-      });
-      // cmd.run;
-      // console.log("Verion updated");
-      // cmd.run("git add package.json");
-      // cmd.run('git commit -m "release"');
-    }
-  });
+    getAsync("git diff-files").then(data => {
+        if (data && data[0].length > 0) {
+            console.log(data, data[0].length);
+            console.log("There were eslint changes, check and commit again.");
+        } else {
+            getAsync('git commit -m "ciao"').then(() => {
+                getAsync("npm version patch").then(() => {
+                    getAsync("git add package.json").then(
+                        // getAsync('git commit -m "release"').then(() => {
+                        //   console.log("version updated");
+                        // })
+                        console.log('version updated');
+                    );
+                });
+            });
+            // cmd.run;
+            // console.log("Verion updated");
+            // cmd.run("git add package.json");
+            // cmd.run('git commit -m "release"');
+        }
+    });
 });
 
 // let value;
