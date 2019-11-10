@@ -1,19 +1,27 @@
 {
-  "name": "test",
-  "version": "1.0.0",
-  "description": "test",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/alecat88/test-versioning.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/alecat88/test-versioning/issues"
-  },
-  "homepage": "https://github.com/alecat88/test-versioning#readme"
+    "name": "test",
+    "version": "1.0.0",
+    "description": "test",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "format": "prettier --write \"src/**/*.{vue,js,css,scss,json}\"",
+        "format:check": "prettier --list-different \"src/**/*.{vue,js,css,scss,json}\""
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/alecat88/test-versioning.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/alecat88/test-versioning/issues"
+    },
+    "homepage": "https://github.com/alecat88/test-versioning#readme",
+    "dependencies": {
+        "node-cmd": "^3.0.0"
+    },
+    "devDependencies": {
+        "prettier": "1.19.1"
+    }
 }
